@@ -1,9 +1,11 @@
 package com.jplumi.service;
 
 import com.jplumi.dto.UpdateLocationRequest;
+import com.jplumi.event.DriverLocationEvent;
 import com.jplumi.model.DriverLocationHistory;
 import com.jplumi.repository.DriverLocationHistoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
 public class DriverLocationService {
 
     private final DriverLocationHistoryRepository repository;
+    private final KafkaTemplate<String, DriverLocationEvent> kafkaTemplate;
 
     public void updateCurrentLocation(UpdateLocationRequest updateLocationRequest) {
         DriverLocationHistory newLocation = new DriverLocationHistory(
@@ -24,6 +27,13 @@ public class DriverLocationService {
         );
 
         repository.save(newLocation);
+
+        DriverLocationEvent newEvent = new DriverLocationEvent(
+                updateLocationRequest.getDriverId(),
+                updateLocationRequest.getLatitude(),
+                updateLocationRequest.getLongitude()
+        );
+        kafkaTemplate.send("update-driver-location", newEvent);
     }
 
 }
