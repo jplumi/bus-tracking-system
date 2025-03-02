@@ -1,4 +1,4 @@
-package com.jplumi.event;
+package com.jplumi.location.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

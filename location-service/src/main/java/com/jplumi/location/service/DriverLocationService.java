@@ -1,9 +1,9 @@
-package com.jplumi.service;
+package com.jplumi.location.service;
 
-import com.jplumi.dto.UpdateLocationRequest;
-import com.jplumi.event.DriverLocationEvent;
-import com.jplumi.model.DriverLocationHistory;
-import com.jplumi.repository.DriverLocationHistoryRepository;
+import com.jplumi.location.dto.UpdateLocationRequest;
+import com.jplumi.location.event.DriverLocationEvent;
+import com.jplumi.location.model.DriverLocationHistory;
+import com.jplumi.location.repository.DriverLocationHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

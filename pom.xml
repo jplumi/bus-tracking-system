@@ -18,6 +18,7 @@
 
     <modules>
         <module>location-service</module>
+        <module>passenger-service</module>
     </modules>
 
     <properties>

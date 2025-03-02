@@ -1,7 +1,7 @@
-package com.jplumi.controller;
+package com.jplumi.location.controller;
 
-import com.jplumi.dto.UpdateLocationRequest;
-import com.jplumi.service.DriverLocationService;
+import com.jplumi.location.dto.UpdateLocationRequest;
+import com.jplumi.location.service.DriverLocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;

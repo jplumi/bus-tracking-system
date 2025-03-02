@@ -1,4 +1,4 @@
-package com.jplumi.model;
+package com.jplumi.location.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

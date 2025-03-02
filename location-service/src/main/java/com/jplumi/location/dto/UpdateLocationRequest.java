@@ -1,4 +1,4 @@
-package com.jplumi.dto;
+package com.jplumi.location.dto;
 
 import lombok.Data;
 
