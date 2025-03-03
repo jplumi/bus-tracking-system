@@ -17,6 +17,8 @@ public class DriverLocationService {
     private final DriverLocationHistoryRepository repository;
     private final KafkaTemplate<String, DriverLocationEvent> kafkaTemplate;
 
+    private static final String LOCATION_KAFKA_TOPIC = "update-driver-location";
+
     public void updateCurrentLocation(UpdateLocationRequest updateLocationRequest) {
         DriverLocationHistory newLocation = new DriverLocationHistory(
                 null,
@@ -33,7 +35,7 @@ public class DriverLocationService {
                 updateLocationRequest.getLatitude(),
                 updateLocationRequest.getLongitude()
         );
-        kafkaTemplate.send("update-driver-location", newEvent);
+        kafkaTemplate.send(LOCATION_KAFKA_TOPIC, newEvent);
     }
 
 }
