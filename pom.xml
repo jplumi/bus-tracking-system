@@ -19,6 +19,7 @@
     <modules>
         <module>location-service</module>
         <module>passenger-service</module>
+        <module>travel-management-service</module>
     </modules>
 
     <properties>
