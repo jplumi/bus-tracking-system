@@ -1,13 +1,20 @@
 package com.jplumi.travel_management.model.routestop;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jplumi.travel_management.model.Route;
 import com.jplumi.travel_management.model.Stop;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_route_stop")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RouteStop {
     @EmbeddedId
     private RouteStopPK id;
@@ -15,6 +22,7 @@ public class RouteStop {
     @ManyToOne
     @MapsId("routeId")
     @JoinColumn(name = "route_id", foreignKey = @ForeignKey(name = "fk_routestop_route"))
+    @JsonIgnore
     private Route route;
 
     @ManyToOne
@@ -23,4 +31,5 @@ public class RouteStop {
     private Stop stop;
 
     private int stopNumber;
+    private LocalDateTime expectedTime;
 }
