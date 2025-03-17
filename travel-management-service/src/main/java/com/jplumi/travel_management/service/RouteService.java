@@ -11,15 +11,16 @@ import com.jplumi.travel_management.repository.RouteStopRepository;
 import com.jplumi.travel_management.repository.StopRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,10 @@ public class RouteService {
     public List<RouteDTO> getAllRoutes() {
         List<Route> routes = repository.findAll();
         return routes.stream().map(RouteDTO::fromRoute).toList();
+    }
+
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
     }
 
     @Transactional
@@ -64,47 +69,24 @@ public class RouteService {
        repository.deleteById(id);
     }
 
-    private Route dtoToRoute(RouteDTO dto) {
-        Route route = new Route();
-        route.setName(dto.getName());
-
-        Set<RouteStop> routeStops = dto.getStops().stream()
-                .map(this::dtoToRouteStop)
-                .collect(Collectors.toSet());
-        route.setStops(routeStops);
-
-        return route;
-    }
-
     private RouteStop dtoToRouteStop(RouteStopDTO dto) {
-        Stop stop = Stop.builder()
-                .id(dto.getStopId())
-                .name(dto.getName())
-                .address(dto.getAddress())
-                .latitude(dto.getLatitude())
-                .longitude(dto.getLongitude()).build();
-
-        LocalDateTime timestamp = LocalDateTime.parse(dto.getExpectedTime(), DateTimeFormatter.ISO_DATE_TIME);
-
-        return RouteStop.builder()
-                .stop(stop)
-                .stopNumber(dto.getStopNumber())
-                .expectedTime(timestamp)
-                .build();
-    }
-
-    private List<Stop> extractStopsFromRouteDTO(RouteDTO routeDTO) {
-        List<Stop> stops = new ArrayList<>();
-        for (RouteStopDTO dto : routeDTO.getStops()) {
-            stops.add(Stop.builder()
+        try {
+            Stop stop = Stop.builder()
                     .id(dto.getStopId())
                     .name(dto.getName())
                     .address(dto.getAddress())
                     .latitude(dto.getLatitude())
-                    .longitude(dto.getLongitude()).build()
-            );
-        }
-        return stops;
-    }
+                    .longitude(dto.getLongitude()).build();
 
+            LocalTime time = LocalTime.parse(dto.getExpectedTime(), DateTimeFormatter.ISO_TIME);
+
+            return RouteStop.builder()
+                    .stop(stop)
+                    .stopNumber(dto.getStopNumber())
+                    .expectedTime(time)
+                    .build();
+        } catch (DateTimeParseException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
 }

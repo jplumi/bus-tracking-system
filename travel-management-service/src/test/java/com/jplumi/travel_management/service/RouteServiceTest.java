@@ -13,8 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -44,9 +46,9 @@ class RouteServiceTest {
     @Test
     void getAllRoutes_ShouldReturnRouteDTOList() {
         // Arrange
-        Route route1 = createRoute();
+        Route route1 = createExampleRoute();
         route1.setId(1L);
-        Route route2 = createRoute();
+        Route route2 = createExampleRoute();
         route2.setId(2L);
 
         when(routeRepository.findAll()).thenReturn(List.of(route1, route2));
@@ -59,8 +61,6 @@ class RouteServiceTest {
         assertEquals(2, result.size());
         assertEquals(route1.getId(), result.get(0).getRouteId());
         assertEquals(route2.getId(), result.get(1).getRouteId());
-        assertEquals("2025-03-10T12:00", result.get(0).getStops().get(0).getExpectedTime());
-        assertEquals("2025-03-10T13:30", result.get(0).getStops().get(1).getExpectedTime());
     }
 
     @Test
@@ -132,7 +132,21 @@ class RouteServiceTest {
         assertNotNull(resultStops.get(1).getStopId());
     }
 
-    private Route createRoute() {
+    @Test
+    void createRoute_WhenWrongTimeFormat_ThenThrowException() {
+        // Arrange
+        RouteDTO routeDTO = new RouteDTO();
+        RouteStopDTO stopDTO = RouteStopDTO.builder().expectedTime("10-83").build();
+        routeDTO.setStops(List.of(stopDTO));
+
+        // Act && Assert
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            routeService.createRoute(routeDTO);
+        });
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+    }
+
+    private Route createExampleRoute() {
         // create route
         Route route = new Route();
         route.setId(1L);
@@ -150,7 +164,7 @@ class RouteServiceTest {
                 .route(route)
                 .stop(stop1)
                 .stopNumber(0)
-                .expectedTime(LocalDateTime.of(2025, 3, 10, 12, 0))
+                .expectedTime(LocalTime.of(12, 0))
                 .build();
 
         // create RouteStop 2
@@ -165,7 +179,7 @@ class RouteServiceTest {
                 .route(route)
                 .stop(stop2)
                 .stopNumber(1)
-                .expectedTime(LocalDateTime.of(2025, 3, 10, 13, 30))
+                .expectedTime(LocalTime.of(13, 30))
                 .build();
 
         route.setStops(Set.of(routeStop1, routeStop2));
@@ -177,7 +191,7 @@ class RouteServiceTest {
                 .stopNumber(0)
                 .name("Gas Station")
                 .address("Something Street, 123")
-                .expectedTime("2025-03-10T12:00")
+                .expectedTime("12:00")
                 .latitude(12.0)
                 .longitude(53.0).build();
         
@@ -185,7 +199,7 @@ class RouteServiceTest {
                 .stopNumber(1)
                 .name("Supermarket")
                 .address("Somewhere Street, 321")
-                .expectedTime("2025-03-10T13:30")
+                .expectedTime("13:30")
                 .latitude(13.1)
                 .longitude(59.5).build();
 

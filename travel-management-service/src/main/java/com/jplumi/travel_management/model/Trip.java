@@ -1,19 +1,21 @@
 package com.jplumi.travel_management.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "tb_trip")
 @Data
+@Builder
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String name;
-    private LocalDateTime startTime;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn( name = "driver_id", foreignKey = @ForeignKey(name = "fk_trip_driver") )

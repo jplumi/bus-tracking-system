@@ -1,5 +1,6 @@
 package com.jplumi.travel_management.controller;
 
+import com.jplumi.travel_management.dto.CreateTripDTO;
 import com.jplumi.travel_management.model.Trip;
 import com.jplumi.travel_management.service.TripService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,12 @@ public class TripController {
 
     @GetMapping
     public List<Trip> getAllTrips() {
-        return null;
+        return service.getAllTrips();
     }
 
     @PostMapping
-    public Trip insertTrip(@RequestBody Trip trip) {
-        return null;
+    public void createTrip(@RequestBody CreateTripDTO trip) {
+        service.createTrip(trip);
     }
 
 }

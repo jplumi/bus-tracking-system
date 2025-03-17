@@ -6,7 +6,7 @@ import com.jplumi.travel_management.model.Stop;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "tb_route_stop")
@@ -31,5 +31,5 @@ public class RouteStop {
     private Stop stop;
 
     private int stopNumber;
-    private LocalDateTime expectedTime;
+    private LocalTime expectedTime;
 }
