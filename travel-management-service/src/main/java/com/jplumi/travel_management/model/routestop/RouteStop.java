@@ -17,6 +17,7 @@ import java.time.LocalTime;
 @Builder
 public class RouteStop {
     @EmbeddedId
+    @JsonIgnore
     private RouteStopPK id;
 
     @ManyToOne

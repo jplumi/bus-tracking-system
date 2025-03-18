@@ -1,8 +1,10 @@
 package com.jplumi.travel_management.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -10,6 +12,8 @@ import java.time.LocalDate;
 @Table(name = "tb_trip")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -25,4 +25,9 @@ public class TripController {
         service.createTrip(trip);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteTripById(@PathVariable Long id) {
+        service.deleteTrip(id);
+    }
+
 }
