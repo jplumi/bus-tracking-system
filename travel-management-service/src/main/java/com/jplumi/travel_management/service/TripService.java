@@ -71,6 +71,6 @@ public class TripService {
         if(optionalTrip.isEmpty()) {
             return false;
         }
-        return optionalTrip.get().getRoute().getStops().size() <= stopNumber;
+        return stopNumber < optionalTrip.get().getRoute().getStops().size();
     }
 }

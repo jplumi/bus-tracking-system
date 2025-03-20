@@ -16,6 +16,7 @@ public class TripValidationController {
 
     @GetMapping("/validate-subscription")
     public boolean validateTripSubscription(@RequestParam Long tripId, @RequestParam Integer stopNumber) {
+        System.out.println("CALLED validate subscription");
         return tripService.validateSubscription(tripId, stopNumber);
     }
 
