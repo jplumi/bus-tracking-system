@@ -4,6 +4,7 @@ import com.jplumi.travel_management.dto.CreateTripDTO;
 import com.jplumi.travel_management.model.Driver;
 import com.jplumi.travel_management.model.Route;
 import com.jplumi.travel_management.model.Trip;
+import com.jplumi.travel_management.model.routestop.RouteStop;
 import com.jplumi.travel_management.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -61,5 +64,13 @@ public class TripService {
 
     public void deleteTrip(Long id) {
         repository.deleteById(id);
+    }
+
+    public boolean validateSubscription(Long tripId, Integer stopNumber) {
+        Optional<Trip> optionalTrip = repository.findById(tripId);
+        if(optionalTrip.isEmpty()) {
+            return false;
+        }
+        return optionalTrip.get().getRoute().getStops().size() <= stopNumber;
     }
 }

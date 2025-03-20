@@ -37,7 +37,7 @@ class TripServiceTest {
 
     @Test
     void createTrip_WhenReceiveTripData_ThenSaveNewTrip() {
-        // Arrange
+        // Given
         CreateTripDTO createTripDTO = CreateTripDTO.builder()
                 .name("Trip Name")
                 .date("2025-04-10")
@@ -47,16 +47,16 @@ class TripServiceTest {
         when(driverService.existsById(1L)).thenReturn(true);
         when(routeService.existsById(1L)).thenReturn(true);
 
-        // Act
+        // When
         tripService.createTrip(createTripDTO);
 
-        // Assert
+        // Then
         verify(tripRepository, times(1)).save(any(Trip.class));
     }
 
     @Test
     void createTrip_WhenRouteNotFound_ThenThrowException() {
-        // Arrange
+        // Given
         CreateTripDTO createTripDTO = CreateTripDTO.builder()
                 .name("Trip Name")
                 .date("2025-04-10")
@@ -66,7 +66,7 @@ class TripServiceTest {
         when(driverService.existsById(1L)).thenReturn(true);
         when(routeService.existsById(1L)).thenReturn(false);
 
-        // Act && Assert
+        // When && Then
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             tripService.createTrip(createTripDTO);
         });
@@ -75,7 +75,7 @@ class TripServiceTest {
 
     @Test
     void createTrip_WhenDriverNotFound_ThenThrowException() {
-        // Arrange
+        // Given
         CreateTripDTO createTripDTO = CreateTripDTO.builder()
                 .name("Trip Name")
                 .date("2025-04-10")
@@ -85,7 +85,7 @@ class TripServiceTest {
         when(driverService.existsById(1L)).thenReturn(false);
         when(routeService.existsById(1L)).thenReturn(true);
 
-        // Act && Assert
+        // When && Then
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             tripService.createTrip(createTripDTO);
         });

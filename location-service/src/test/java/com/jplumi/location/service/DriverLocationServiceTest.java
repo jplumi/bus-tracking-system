@@ -29,16 +29,16 @@ class DriverLocationServiceTest {
 
     @Test
     void whenReceivesDriverLocation_shouldSaveAndSendEvent() {
-        // Arrange
+        // Given
         UpdateLocationRequest request = new UpdateLocationRequest();
         request.setDriverId(1L);
         request.setLatitude(3.5f);
         request.setLongitude(2.5f);
 
-        // Act
+        // When
         driverLocationService.updateCurrentLocation(request);
 
-        // Assert
+        // Then
         verify(repository, times(1)).save(any(DriverLocationHistory.class));
         verify(kafkaTemplate, times(1)).send(anyString(), any(DriverLocationEvent.class));
     }

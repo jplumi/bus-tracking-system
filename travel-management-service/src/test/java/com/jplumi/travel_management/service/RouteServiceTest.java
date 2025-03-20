@@ -45,7 +45,7 @@ class RouteServiceTest {
 
     @Test
     void getAllRoutes_ShouldReturnRouteDTOList() {
-        // Arrange
+        // Given
         Route route1 = createExampleRoute();
         route1.setId(1L);
         Route route2 = createExampleRoute();
@@ -53,10 +53,10 @@ class RouteServiceTest {
 
         when(routeRepository.findAll()).thenReturn(List.of(route1, route2));
 
-        // Act
+        // When
         List<RouteDTO> result = routeService.getAllRoutes();
 
-        // Assert
+        // Then
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(route1.getId(), result.get(0).getRouteId());
@@ -65,7 +65,7 @@ class RouteServiceTest {
 
     @Test
     void createRoute_WhenStopsExist_ThenSaveOnlyRoute() {
-        // Arrange
+        // Given
         RouteDTO inputRouteDTO = createExampleRouteDTO();
 
         RouteStopDTO stop1 = inputRouteDTO.getStops().get(0);
@@ -83,10 +83,10 @@ class RouteServiceTest {
         returnedRoute.setId(1L);
         when(routeRepository.save(any())).thenReturn(returnedRoute);
 
-        // Act
+        // When
         RouteDTO result = routeService.createRoute(inputRouteDTO);
 
-        // Assert
+        // Then
         verify(routeRepository, times(1)).save(any(Route.class));
 
         assertNotNull(result);
@@ -99,7 +99,7 @@ class RouteServiceTest {
 
     @Test
     void createRoute_WhenStopsDoNotExist_ThenSaveStopsAndRoute() {
-        // Arrange
+        // Given
         RouteDTO inputRouteDTO = createExampleRouteDTO();
 
         RouteStopDTO stop1 = inputRouteDTO.getStops().get(0);
@@ -117,10 +117,10 @@ class RouteServiceTest {
         returnedRoute.setId(1L);
         when(routeRepository.save(any())).thenReturn(returnedRoute);
 
-        // Act
+        // When
         RouteDTO result = routeService.createRoute(inputRouteDTO);
 
-        // Assert
+        // Then
         verify(routeRepository, times(1)).save(any(Route.class));
         verify(stopRepository, times(2)).save(any(Stop.class));
 
@@ -134,12 +134,12 @@ class RouteServiceTest {
 
     @Test
     void createRoute_WhenWrongTimeFormat_ThenThrowException() {
-        // Arrange
+        // Given
         RouteDTO routeDTO = new RouteDTO();
         RouteStopDTO stopDTO = RouteStopDTO.builder().expectedTime("10-83").build();
         routeDTO.setStops(List.of(stopDTO));
 
-        // Act && Assert
+        // When && Then
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             routeService.createRoute(routeDTO);
         });

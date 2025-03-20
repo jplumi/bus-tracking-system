@@ -30,27 +30,27 @@ class DriverServiceTest {
 
     @Test
     void getDriverById_WhenIdFound_ThenReturnDriver() {
-        // Arrange
+        // Given
         Long id = 1L;
         Driver newDriver = new Driver();
         newDriver.setId(id);
         when(driverRepository.findById(id)).thenReturn(Optional.of(newDriver));
 
-        // Act
+        // When
         Driver result = driverService.getDriverById(id);
 
-        // Assert
+        // Then
         assertNotNull(result);
         assertEquals(id, result.getId());
     }
 
     @Test
     void getDriverById_WhenIdNotFound_ThenThrowException() {
-        // Arrange
+        // Given
         Long id = 1L;
         when(driverRepository.findById(id)).thenReturn(Optional.empty());
 
-        // Act && Assert
+        // When && Then
         ResponseStatusException resultException = assertThrows(ResponseStatusException.class, () -> {
             driverService.getDriverById(id);
         });
