@@ -28,7 +28,7 @@ class DriverLocationServiceTest {
     }
 
     @Test
-    void whenReceivesDriverLocation_shouldSaveAndSendEvent() {
+    void whenReceivesDriverLocation_ThenSaveAndSendEvent() {
         // Given
         UpdateLocationRequest request = new UpdateLocationRequest();
         request.setDriverId(1L);

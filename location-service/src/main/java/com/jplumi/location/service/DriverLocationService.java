@@ -23,6 +23,7 @@ public class DriverLocationService {
         DriverLocationHistory newLocation = new DriverLocationHistory(
                 null,
                 updateLocationRequest.getDriverId(),
+                updateLocationRequest.getTripId(),
                 LocalDateTime.now(),
                 updateLocationRequest.getLatitude(),
                 updateLocationRequest.getLongitude()
@@ -32,6 +33,7 @@ public class DriverLocationService {
 
         DriverLocationEvent newEvent = new DriverLocationEvent(
                 updateLocationRequest.getDriverId(),
+                updateLocationRequest.getTripId(),
                 updateLocationRequest.getLatitude(),
                 updateLocationRequest.getLongitude()
         );

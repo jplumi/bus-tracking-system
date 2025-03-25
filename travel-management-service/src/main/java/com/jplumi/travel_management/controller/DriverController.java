@@ -37,4 +37,9 @@ public class DriverController {
         service.deleteDriver(id);
     }
 
+    @GetMapping("/validate-id")
+    public boolean validateDriverId(@PathVariable Long driverId) {
+        return service.existsById(driverId);
+    }
+
 }

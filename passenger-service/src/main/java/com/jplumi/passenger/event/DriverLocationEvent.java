@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DriverLocationEvent {
     private Long driverId;
+    private Long tripId;
     private float latitude;
     private float longitude;
 }

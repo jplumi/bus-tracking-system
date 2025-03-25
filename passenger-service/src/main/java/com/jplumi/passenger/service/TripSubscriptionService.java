@@ -1,6 +1,6 @@
 package com.jplumi.passenger.service;
 
-import com.jplumi.passenger.client.TripManagementClient;
+import com.jplumi.passenger.client.TravelManagementClient;
 import com.jplumi.passenger.model.Passenger;
 import com.jplumi.passenger.model.TripSubscription;
 import com.jplumi.passenger.repository.TripSubscriptionRepository;
@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class TripSubscriptionService {
 
     private final TripSubscriptionRepository repository;
-    private final TripManagementClient tripManagementClient;
+    private final TravelManagementClient tripManagementClient;
     private final PassengerService passengerService;
 
     @Transactional

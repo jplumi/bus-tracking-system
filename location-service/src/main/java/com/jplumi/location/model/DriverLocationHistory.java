@@ -14,6 +14,7 @@ public class DriverLocationHistory {
     @Id
     private String id;
     private Long driverId;
+    private Long tripId;
     private LocalDateTime timestamp;
     private float latitude;
     private float longitude;

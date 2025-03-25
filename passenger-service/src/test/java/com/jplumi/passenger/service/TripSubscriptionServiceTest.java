@@ -1,6 +1,6 @@
 package com.jplumi.passenger.service;
 
-import com.jplumi.passenger.client.TripManagementClient;
+import com.jplumi.passenger.client.TravelManagementClient;
 import com.jplumi.passenger.model.Passenger;
 import com.jplumi.passenger.model.TripSubscription;
 import com.jplumi.passenger.repository.TripSubscriptionRepository;
@@ -24,7 +24,7 @@ class TripSubscriptionServiceTest {
     private TripSubscriptionRepository subscriptionRepository;
 
     @Mock
-    private TripManagementClient tripManagementClient;
+    private TravelManagementClient tripManagementClient;
 
     @Mock
     private PassengerService passengerService;
