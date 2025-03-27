@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient("travel-management-service")
 public interface TravelManagementClient {
+
     @GetMapping("/trips/validate-subscription")
     boolean validateTripSubscription(@RequestParam Long tripId, @RequestParam Integer stopNumber);
+
 }

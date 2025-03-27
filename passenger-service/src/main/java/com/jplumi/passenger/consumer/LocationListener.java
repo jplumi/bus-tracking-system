@@ -16,6 +16,6 @@ public class LocationListener {
 
     @KafkaListener(topics = LOCATION_KAFKA_TOPIC)
     public void getMessage(DriverLocationEvent event) {
-        locationService.sendLocationUpdate(event);
+        locationService.sendLocationToPassengers(event);
     }
 }
